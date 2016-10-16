@@ -4,25 +4,41 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.view.View;
+import android.widget.Button;
 
-public class UploadActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class UploadActivity extends AppCompatActivity implements View.OnClickListener{
 
     private UploadRequest upload;
-    private Element element;
+    private Button submitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
-        element = new Element(1, Pair.create(-213.213, -32424.4343), "Teste", "This is a test!");
-        upload = new UploadRequest(element);
+        this.submitButton = (Button) findViewById(R.id.send_element);
+        submitButton.setOnClickListener((View.OnClickListener) this);
+    }
 
-        upload.request(getApplicationContext(), new UploadRequest.Callback() {
-            @Override
-            public void callbackResponse(boolean success) {
-                Log.i("UPLOAD", "Upload realizado com sucesso!");
-            }
-        });
+    @Override
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.send_element:
+                ArrayList<Element> elements = TSVReader.getElements(getApplicationContext(), R.raw.tabela_elementos);
+
+                for (final Element element: elements) {
+                    upload = new UploadRequest(element);
+
+                    upload.request(getApplicationContext(), new UploadRequest.Callback() {
+                        @Override
+                        public void callbackResponse(boolean success) {
+                            Log.i("UPLOAD", "Upload do elemento " + element.getIdElement() + " com sucesso!");
+                        }
+                    });
+                }
+        }
     }
 }
