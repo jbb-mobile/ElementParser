@@ -21,7 +21,7 @@ public class Element {
         validateCoordinates(coordinates);
     }
 
-    public Element(int idElement, String nameElement, String textDescription, Pair<Double, Double> coordinates) {
+    public Element(int idElement, Pair<Double, Double> coordinates, String nameElement, String textDescription) {
         validateID(idElement);
         validateNameElement(nameElement);
         validateTextDescription(textDescription);
@@ -39,7 +39,7 @@ public class Element {
         if(coordinates.first == null || coordinates.second == null)
             throw new IllegalArgumentException("Invalid element's coordinate");
         else
-            setDefaultImage(defaultImage);
+            setCoordinates(coordinates);
     }
 
     private void validateDefaultImage(String defaultImage){
