@@ -36,9 +36,24 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void callbackResponse(boolean success) {
                             Log.i("UPLOAD", "Upload do elemento " + element.getIdElement() + " com sucesso!");
+
+                            if (!success) { // The element already exists, so update the elements;
+                                UpdateRequest update = new UpdateRequest(element);
+                                update.request(getApplicationContext(), new UpdateRequest.Callback() {
+                                    @Override
+                                    public void callbackResponse(boolean success) {
+                                        Log.i("UPDATE", "Update do elemento " + element.getIdElement() + " com sucesso!");
+
+                                        if (!success) {
+                                            Log.e("UPDATE", "Update do elemento " + element.getIdElement() + " falhou!");
+                                        }
+                                    }
+                                });
+                            }
                         }
                     });
                 }
         }
     }
 }
+
