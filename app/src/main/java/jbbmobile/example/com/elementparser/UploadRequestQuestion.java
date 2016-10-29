@@ -33,8 +33,9 @@ public class UploadRequestQuestion {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     Log.d("RESPONSE", response);
-                    Log.i("Test", String.valueOf(jsonObject.getBoolean("success")));
-                    callback.callbackResponse(jsonObject.getBoolean("success"));
+                    boolean successQuestion = jsonObject.getBoolean("successQuestion");
+                    boolean successAlternatives  = jsonObject.getBoolean("successAlternative");
+                    callback.callbackResponse(successQuestion && successAlternatives);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -54,6 +55,7 @@ public class UploadRequestQuestion {
                 params.put("c", question.getAlternatives().get("c"));
                 params.put("d", question.getAlternatives().get("d"));
                 params.put("e", question.getAlternatives().get("e"));
+                params.put("#alternatives", String.valueOf(question.getAlternativeQuantity()));
                 return params;
             }
         };

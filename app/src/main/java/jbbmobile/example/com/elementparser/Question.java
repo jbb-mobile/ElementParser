@@ -8,12 +8,14 @@ public class Question {
     private String description;
     private Map<String, String> alternatives;
     private String correctAnswer;
+    private int alternativeQuantity;
 
-    public Question(int id, String description, Map<String, String> alternatives, String correctAnswer) {
+    public Question(int id, String description, Map<String, String> alternatives, String correctAnswer, int alternativeQuantity) {
         setId(id);
         setDescription(description);
         setAlternatives(alternatives);
         setCorrectAnswer(correctAnswer);
+        setAlternativeQuantity(alternativeQuantity);
     }
 
     public int getId() {
@@ -58,6 +60,14 @@ public class Question {
             this.correctAnswer = correctAnswer;
         else
             throw new IllegalArgumentException("blank correct answer");
+    }
+
+    public int getAlternativeQuantity() {
+        return alternativeQuantity;
+    }
+
+    public void setAlternativeQuantity(int alternativeQuantity) {
+        this.alternativeQuantity = alternativeQuantity;
     }
 
     private boolean validateId(int id){
